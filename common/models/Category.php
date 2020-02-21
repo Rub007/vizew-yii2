@@ -17,7 +17,7 @@ use yii\db\ActiveRecord;
  *
  * @property CategoryPost[] $categoryPosts
  */
-class Categories extends \yii\db\ActiveRecord
+class Category extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}

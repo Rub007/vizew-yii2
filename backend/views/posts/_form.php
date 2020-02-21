@@ -1,38 +1,43 @@
 <?php
 
+use bajadev\ckeditor\CKEditor;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Posts */
+/* @var $model common\models\Post */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="posts-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'src')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'mime_type')->textInput(['maxlength' => true]) ?>
-    <?php
-        echo '<label class="control-label">Provinces</label>';
-        echo Select2::widget([
-        'name' => 'state_10',
-        'data' => $categories,
-        'options' => [
-        'placeholder' => 'Select provinces ...',
-        'multiple' => true
+    <?php echo $form->field($model, 'description')->widget(CKEditor::className(), [
+    'editorOptions' => [
+        'preset' => 'basic',
+            'inline' => false,
+            'filebrowserBrowseUrl' => 'browse-images',
+            'filebrowserUploadUrl' => 'upload-images',
+            'extraPlugins' => 'imageuploader',
         ],
-        ]);
+    ]); ?>
+    <?php
+    echo $form->field($model, 'category')->widget(Select2::classname(), [
+        'name' => 'categories',
+        'data' => $categories,
+        'options' => ['placeholder' => 'Select a state ...', 'multiple' => true],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);
     ?>
+
+    <?=$form->field($model, 'imageFile')->fileInput()?>
+
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
