@@ -1,0 +1,10 @@
+.my-big-img{
+    width: 400px;
+    height: 400px;
+}
+.img-div{
+    text-align: center;
+    display: block;
+    margin: auto;
+    width: 50%;
+}

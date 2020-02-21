@@ -184,10 +184,8 @@ class PostsController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
     public function actions()
     {
-
         return [
             'browse-images' => [
                 'class' => 'bajadev\ckeditor\actions\BrowseAction',
@@ -209,5 +207,4 @@ class PostsController extends Controller
             ],
         ];
     }
-
 }
