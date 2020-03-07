@@ -72,6 +72,17 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getCategoryPosts()
     {
-        return $this->hasMany(CategoryPost::className(), ['category_id' => 'id']);
+        return $this->hasMany(PostCategory::className(), ['category_id' => 'id']);
+    }
+    public function getPosts(){
+        return $this->hasMany(Post::className(),['id' => 'post_id'])->via('categoryPosts');
+    }
+    public function popularCategories(){
+        return $this::find()
+            ->with('posts')
+            ->orderBy(['rand()' => SORT_DESC])
+            ->limit(2)
+            ->asArray()
+            ->all();
     }
 }

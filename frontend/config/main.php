@@ -10,8 +10,10 @@ return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'layout' => 'layout',
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],
@@ -40,7 +42,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '' => 'site/index',
+                '' => 'main/index',
                 'my/index/<id:\w+>' => 'my/index',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
             ],

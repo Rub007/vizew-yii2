@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\UploadedFile;
 
@@ -103,6 +104,7 @@ class Post extends \yii\db\ActiveRecord
     public function getCategory(){
         return $this->hasMany(Category::className(),['id' => 'category_id'])->via('categoryPosts');
     }
+
     /**
      * Gets query for [[Comments]].
      *
@@ -112,6 +114,7 @@ class Post extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Comments::className(), ['post_id' => 'id']);
     }
+
     public function upload()
     {
         if ($this->validate()) {
@@ -124,9 +127,36 @@ class Post extends \yii\db\ActiveRecord
             return false;
         }
     }
+
     public function deleteImage($path){
         if (file_exists($path)){
             unlink($path);
         }
+    }
+
+    public function nextPost($id){
+        return $this->find()->where(['>','id',$id])->with('category')->asArray()->one();
+    }
+
+    public function previousPost($id){
+        return $this->find()->where(['<','id',$id])->with('category')->asArray()->one();
+    }
+
+    public function getSameCategoryPosts($post){
+        return $this->find()->where(['!=', 'id', $post['id']])->with(['category' => function (ActiveQuery $query) use($post) {
+            $query->where([ 'id' => $post['category'][0]['id']]);
+        }])->limit(2)->all();
+    }
+
+    public function firstPost(){
+        return $this->find()->with('category')->one();
+    }
+
+    public function postsWithCount($count){
+        return $this->find()->with('category')->orderBy(['rand()' => SORT_DESC])->limit($count)->all();
+    }
+
+    public function randomPosts(){
+        return $this->find()->with('category')->orderBy(['rand()' => SORT_DESC])->limit(4)->all();
     }
 }
