@@ -8,6 +8,8 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Post */
 /* @var $form yii\widgets\ActiveForm */
+
+
 ?>
 
 <div class="posts-form">
@@ -26,8 +28,7 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
     <?php
-    echo $form->field($model, 'category')->widget(Select2::classname(), [
-        'name' => 'categories',
+    echo $form->field($model, 'selectedCategories')->widget(Select2::classname(), [
         'data' => $categories,
         'options' => ['placeholder' => 'Select a state ...', 'multiple' => true],
         'pluginOptions' => [

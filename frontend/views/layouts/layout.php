@@ -9,7 +9,8 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
-
+use frontend\components\CategoriesWidget;
+$categories  = CategoriesWidget::categories();
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -66,19 +67,19 @@ AppAsset::register($this);
                         <div class="classynav">
                             <ul>
                                 <li><a href="/">Home</a></li>
-                                <li><a href="/posts">News</a></li>
+                                <li><a href="<?= \yii\helpers\Url::to('posts') ?>">News</a></li>
                                 <li class="cn-dropdown-item has-down"><a href="#">Categories</a>
                                     <ul class="dropdown">
                                         <?php
-                                            foreach (Yii::$app->params['categories'] as $category){
+                                            foreach ($categories as $category):
                                         ?>
                                         <li><a href=""><?=$category['name']?></a></li>
                                         <?php
-                                            }
+                                            endforeach;
                                         ?>
                                     </ul>
                                     <span class="dd-trigger"></span></li>
-                                <li><a href="contact">Contact</a></li>
+                                <li><a href="<?= \yii\helpers\Url::to('contact') ?>">Contact</a></li>
                             </ul>
                         </div>
                         <!-- Nav End -->

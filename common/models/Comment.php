@@ -22,6 +22,7 @@ class Comment extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+
     public static function tableName()
     {
         return 'comments';
@@ -62,7 +63,7 @@ class Comment extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPost()
+    public function getPosts()
     {
         return $this->hasOne(Post::className(), ['id' => 'post_id']);
     }

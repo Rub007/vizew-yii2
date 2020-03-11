@@ -12,10 +12,10 @@ use yii\widgets\ActiveForm;
             <p>PREVIOUS ARTICLE</p>
             <!-- Single Feature Post -->
             <div class="single-feature-post video-post bg-img pager-article"
-                 style="background-image: url(<?= 'http://yii-application-admin.loc/' . $previous['src'] ?>);">
+                 style="background-image: url(<?='/'.$previous['src'] ?>);">
                 <!-- Post Content -->
                 <div class="post-content">
-                    <?php foreach ($previous['category'] as $category): ?>
+                    <?php foreach ($previous['categories'] as $category): ?>
                         <a href="" class="post-cata cata-sm cata-success"
                            style="background-color:<?= $category['color'] ?>"><?= $category['name'] ?></a>
                     <?php endforeach; ?>
@@ -31,10 +31,10 @@ use yii\widgets\ActiveForm;
             <p>NEXT ARTICLE</p>
             <!-- Single Feature Post -->
             <div class="single-feature-post video-post bg-img pager-article"
-                 style="background-image: url(<?= 'http://yii-application-admin.loc/' . $next['src'] ?>);">
+                 style="background-image: url(<?='/'.$next['src'] ?>);   ">
                 <!-- Post Content -->
                 <div class="post-content">
-                    <?php foreach ($next['category'] as $category): ?>
+                    <?php foreach ($next['categories'] as $category): ?>
                         <a href="" class="post-cata cata-sm cata-success"
                            style="background-color:<?= $category['color'] ?>"><?= $category['name'] ?></a>
                     <?php endforeach; ?>
@@ -66,14 +66,14 @@ use yii\widgets\ActiveForm;
 
                         <!-- Post Content -->
                         <div class="post-content mt-0">
-                            <?php foreach ($post['category'] as $category):?>
+                            <?php foreach ($post['categories'] as $category):?>
                                 <a href="#" style="background-color: <?= $category['color'] ?>"
                                    class="post-cata cata-sm cata-danger"><?= $category['name']?></a>
                             <?php endforeach;?>
                             <a href="<?= Url::toRoute(['posts/view', 'id' => $post['id']]) ?>"
                                class="post-title mb-2"><?= $post['name'] ?></a>
                             <div class="post-details-thumb mb-50">
-                                <img src="<?= 'http://yii-application-admin.loc/' . $post['src'] ?>" alt="">
+                                <img src="/<?=$post['src']?>" alt="">
                             </div>
                             <div class="d-flex justify-content-between mb-30">
                                 <div class="post-meta d-flex align-items-center">
@@ -102,12 +102,12 @@ use yii\widgets\ActiveForm;
                                     <div class="single-post-area mb-50">
                                         <!-- Post Thumbnail -->
                                         <div class="post-thumbnail">
-                                            <img src="<?= 'http://yii-application-admin.loc/' . $related['src'] ?>" alt="">
+                                            <img src="<?='/'.$related['src'] ?>" alt="">
                                             <!-- Video Duration -->
                                         </div>
                                         <!-- Post Content -->
                                         <div class="post-content">
-                                            <?php foreach ($related['category'] as $category) :?>
+                                            <?php foreach ($related['categories'] as $category) :?>
                                             <a href="#" class="post-cata cata-sm cata-success"
                                                style="background-color: <?=$category['color']?>"><?=$category['name']?></a>
                                             <?php endforeach; ?>

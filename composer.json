@@ -20,7 +20,9 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "kartik-v/yii2-widget-select2": "dev-master",
         "kartik-v/yii2-widget-fileinput": "dev-master",
-        "bajadev/yii2-ckeditor": "*"
+        "bajadev/yii2-ckeditor": "*",
+        "kartik-v/yii2-widget-datepicker": "dev-master",
+        "kartik-v/yii2-field-range": "^1.3"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

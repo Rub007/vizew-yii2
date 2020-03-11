@@ -1,5 +1,6 @@
 <?php
 
+use kartik\date\DatePicker;
 use yii\data\ArrayDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -25,9 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
 
+    // Multiple Dates Selection
+//     echo $this->render('_search', ['model' => $searchModel]);
+
 
     echo GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -54,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'value' => function ($dataProvider) {
 
-                    return Html::img(Url::base('').'/'.$dataProvider['src'],
+                    return Html::img(Yii::$app->urlManagerFrontEnd->createUrl($dataProvider['src']),
                         ['width' => '60px']);
                 },
             ],
@@ -64,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'html',
                 'label' => 'Categories',
                 'value' => function ($data) {
-                $category = $data->category;
+                $category = $data->categories;
                 $arrayDataProvider = new ArrayDataProvider(['allModels' => $category,]);
                     return ListView::widget([
                         'dataProvider' => $arrayDataProvider,
@@ -79,9 +84,27 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]);
                 },
             ],
+            [
+                'attribute' => 'created_at',
+                  'format' => ['date', 'php:d-M-Y H:i:s'],
+                'filter' => DatePicker::widget([
+                     'name' => "PostSearch[created_at]",
+                     'type' => DatePicker::TYPE_INPUT,
+                     'value' => '',
+                     'pluginOptions' => [
+                         'autoclose'=>true,
+                         'format' => 'dd-M-yyyy'
+                     ]
+                 ])
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+    <a href="<?= Url::to('/posts') ?>">Reset</a>
+<!--    <img src="--><?//=Url::toRoute('/uploads/2020-03-11-10-03-54.png')?><!--" alt="">-->
+    <img src="/uploads/2020-03-11-10-03-54.png" alt="">
+<!--    http://yii-application.loc/uploads/2020-03-11-10-03-54.png-->
+<!--    --><?//=Yii::$app->urlManagerFrontEnd->createUrl()?>
 
 
 </div>

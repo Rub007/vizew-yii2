@@ -17,6 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="img-div">
     <h1><?= Html::encode($this->title) ?></h1>
         <img src="<?=Url::base('').'/'.$model->src?>" alt="" class="my-big-img">
+        <img src="<?=Yii::$app->urlManagerFrontEnd->createUrl($model->src)?>" alt="" class="my-big-img">
+
     </div>
     <?= DetailView::widget([
         'model' => $model,

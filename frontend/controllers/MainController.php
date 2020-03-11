@@ -13,15 +13,15 @@ class MainController extends \yii\web\Controller
         $model = new Post();
         $category = new Category();
         $categories = Category::find()->asArray()->all();
-        Yii::$app->params['categories'] = $categories;
-        $firstPost = $model->firstPost();
+//        Yii::$app->params['categories'] = $categories;
+        $firstPost = Post::firstPost();
         if (!$firstPost){
             return 'error';
         }
-        $trendingPosts = $model->postsWithCount(3);
-        $featuredPosts = $model->postsWithCount(2);
+        $trendingPosts = Post::postsWithCount(3);
+        $featuredPosts = Post::postsWithCount(2);
         $popularCategories = $category->popularCategories();
-        $randomPosts = $model->randomPosts();
+        $randomPosts = Post::randomPosts();
         return $this->render('index',
             [
                 'firstPost' => $firstPost,

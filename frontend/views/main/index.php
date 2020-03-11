@@ -11,10 +11,10 @@ use yii\helpers\Url; ?>
                     <div class="tab-pane show active" id="post-1" role="tabpanel" aria-labelledby="post-1-tab">
                         <!-- Single Feature Post -->
                         <div class="single-feature-post video-post bg-img"
-                             style="background-image:url(<?= 'http://yii-application-admin.loc/' . $firstPost['src'] ?>)">
+                             style="background-image:url(<?= '/' . $firstPost['src'] ?>)">
                             <!-- Post Content -->
                             <div class="post-content">
-                                <?php foreach($firstPost['category'] as $category):?>
+                                <?php foreach($firstPost['categories'] as $category):?>
                                 <a style="background-color:<?= $category['color'] ?>" class="post-cata"
                                    href="#"><?= $category['name'] ?></a>
                                 <?php endforeach; ?>
@@ -49,11 +49,11 @@ use yii\helpers\Url; ?>
                 <div class="single-post-area mb-80">
                     <!-- Post Thumbnail -->
                     <div class="post-thumbnail">
-                        <img src="<?='http://yii-application-admin.loc/' . $trendingPost['src']?>" alt="">
+                        <img src="<?='/' . $trendingPost['src']?>" alt="">
                     </div>
                     <!-- Post Content -->
                     <div class="post-content">
-                        <?php foreach($trendingPost['category'] as $category): ?>
+                        <?php foreach($trendingPost['categories'] as $category): ?>
                         <a href="#" style="background-color: <?= $category['color'] ?>"
                            class="post-cata cata-sm cata-success"><?= $category['name']?></a>
                         <?php endforeach; ?>
@@ -85,10 +85,10 @@ use yii\helpers\Url; ?>
                         <!-- Single Feature Post -->
                         <?php foreach($featuredPosts as $featuredPost ): ?>
                         <div class="single-feature-post video-post bg-img"
-                             style="background-image: url('<?='http://yii-application-admin.loc/' . $featuredPost['src']?>')">
+                             style="background-image: url('<?='/' . $featuredPost['src']?>')">
                             <!-- Post Content -->
                             <div class="post-content">
-                                <?php foreach($featuredPost['category'] as $category): ?>
+                                <?php foreach($featuredPost['categories'] as $category): ?>
                                 <a href="#" class="post-cata my-category"
                                    style="background-color:<?= $category['color'] ?>"><?= $category['name'] ?></a>
                                 <?php endforeach; ?>
@@ -113,7 +113,7 @@ use yii\helpers\Url; ?>
                             <?php foreach($category['posts'] as $post): ?>
                             <!-- Single Blog Post -->
                             <div class="single-post-area my-area single-feature-post video-post"
-                                 style="background-image: url('<?='http://yii-application-admin.loc/' . $post['src']?>'); background-repeat: no-repeat">
+                                 style="background-image: url('<?='/' . $post['src']?>'); background-repeat: no-repeat">
                                 <a href="{{route('single.post',$topic)}}" class="btn play-btn"><i
                                             class="fa fa-play" aria-hidden="true"></i></a>
 
@@ -142,13 +142,13 @@ use yii\helpers\Url; ?>
                         <div class="col-12 col-lg-6">
                             <!-- Post Thumbnail -->
                             <div class="post-thumbnail">
-                                <img src="<?='http://yii-application-admin.loc/' . $randomPost['src']?>">
+                                <img src="<?='/' . $randomPost['src']?>">
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <!-- Post Content -->
                             <div class="post-content mt-0">
-                                <?php foreach($randomPost['category'] as $category) : ?>
+                                <?php foreach($randomPost['categories'] as $category) : ?>
                                 <a href="#" class="post-cata cata-sm cata-success"
                                    style="background-color:<?= $category['color'] ?>"><?= $category['name'] ?></a>
                                 <?php endforeach; ?>
@@ -186,12 +186,12 @@ use yii\helpers\Url; ?>
                         <div class="single-post-area mb-30">
                             <!-- Post Thumbnail -->
                             <div class="post-thumbnail">
-                                <img src="<?='http://yii-application-admin.loc/' . $firstPost['src']?>" alt="">
+                                <img src="<?='/' . $firstPost['src']?>" alt="">
                             </div>
 
                             <!-- Post Content -->
                             <div class="post-content">
-                                <?php foreach($firstPost['category'] as $category): ?>
+                                <?php foreach($firstPost['categories'] as $category): ?>
 
                                 <a href="#" class="post-cata cata-sm cata-success"
                                    style=" background-color: <?= $category['color'] ?>"><?= $category['name'] ?></a>

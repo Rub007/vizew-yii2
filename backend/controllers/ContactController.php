@@ -8,7 +8,7 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
-class ContactController extends Controller
+class ContactController extends AdminController
 {
     public function actionIndex(){
         $messages = Messages::find()->all();

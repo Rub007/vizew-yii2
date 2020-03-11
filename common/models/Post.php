@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use Yii;
+use http\Url;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -22,17 +22,19 @@ use yii\web\UploadedFile;
  * @property int|null $updated_at
  *
  * @property PostCategory[] $categoryPosts
- * @property Comments[] $comments
+ * @property Comment[] $comments
  *
  */
-
-class Post extends \yii\db\ActiveRecord
+class Post extends ActiveRecord
 {
     const SCENARIO_CREATE = 'create';
     /**
      * @var UploadedFile
      */
     public $imageFile;
+//    public $categoryIds;
+    public $selectedCategories;
+
 
     /**
      * {@inheritdoc}
@@ -46,7 +48,7 @@ class Post extends \yii\db\ActiveRecord
     {
         return [
             [
-                'class' => TimestampBehavior::className(),
+                'class' => TimestampBehavior::class,
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
@@ -61,19 +63,22 @@ class Post extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['description'],'string'],
-            [['created_at','updated_at'], 'integer'],
-            [['name', 'src','type', 'mime_type'], 'string', 'max' => 255],
-            [['imageFile'],'file','skipOnEmpty' => true,'extensions' => 'png, jpg'],
-            [['imageFile'],'file','skipOnEmpty' => false,'extensions' => 'png, jpg','on' => self::SCENARIO_CREATE],
+            [['description'], 'string'],
+            [['selectedCategories'], 'safe'],
+            [['created_at', 'updated_at'], 'integer'],
+            [['name', 'src', 'type', 'mime_type'], 'string', 'max' => 255],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'on' => self::SCENARIO_CREATE],
         ];
     }
+
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_CREATE] = ['description','created_at','name', 'src', 'imageFile'];
+        $scenarios[self::SCENARIO_CREATE] = ['description', 'created_at', 'name', 'src', 'imageFile', 'selectedCategories'];
         return $scenarios;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -94,69 +99,82 @@ class Post extends \yii\db\ActiveRecord
     /**
      * Gets query for [[CategoryPosts]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getCategoryPosts()
     {
-        return $this->hasMany(PostCategory::className(), ['post_id' => 'id']);
+        return $this->hasMany(PostCategory::class, ['post_id' => 'id']);
     }
 
-    public function getCategory(){
-        return $this->hasMany(Category::className(),['id' => 'category_id'])->via('categoryPosts');
+    public function getCategories()
+    {
+        return $this->hasMany(Category::class, ['id' => 'category_id'])->via('categoryPosts');
     }
 
     /**
      * Gets query for [[Comments]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getComments()
     {
-        return $this->hasMany(Comments::className(), ['post_id' => 'id']);
+        return $this->hasMany(Comment::class, ['post_id' => 'id']);
     }
 
     public function upload()
     {
         if ($this->validate()) {
-            $path = 'uploads/'. date("Y-m-d-h-m-s") .'.'.$this->imageFile->extension;
-            $this->imageFile->saveAs($path);
+            $path = 'uploads/'.date("Y-m-d-h-m-s") . '.' . $this->imageFile->extension;
+            $fullPath = \yii\helpers\Url::to('@frontend/web/' ).$path;
+            $this->imageFile->saveAs($fullPath);
             $this->imageFile = null;
             return $path;
         } else {
-
             return false;
         }
     }
 
-    public function deleteImage($path){
-        if (file_exists($path)){
-            unlink($path);
+    public function deleteImage($path)
+    {
+        $fullPath = \yii\helpers\Url::to('@frontend/web/' ).$path;
+        if (file_exists($fullPath)) {
+            unlink($fullPath);
         }
     }
 
-    public function nextPost($id){
-        return $this->find()->where(['>','id',$id])->with('category')->asArray()->one();
+    public function nextPost($id)
+    {
+        return $this->find()->where(['>', 'id', $id])->with('categories')->asArray()->one();
     }
 
-    public function previousPost($id){
-        return $this->find()->where(['<','id',$id])->with('category')->asArray()->one();
+    public function previousPost($id)
+    {
+        return $this->find()->where(['<', 'id', $id])->with('categories')->orderBy(['id' => SORT_DESC])->asArray()->one();
+
     }
 
-    public function getSameCategoryPosts($post){
-        return $this->find()->where(['!=', 'id', $post['id']])->with(['category' => function (ActiveQuery $query) use($post) {
-            $query->where([ 'id' => $post['category'][0]['id']]);
+    public function getSameCategoryPosts($post)
+    {
+        if (!$post['categories']){
+            return [];
+        }
+        return $this->find()->where(['!=', 'id', $post['id']])->with(['categories' => function (ActiveQuery $query) use ($post) {
+            $query->where(['id' => $post['categories'][0]['id']]);
         }])->limit(2)->all();
     }
 
-    public function firstPost(){
-        return $this->find()->with('category')->one();
+    public static function firstPost()
+    {
+        return self::find()->with('categories')->one();
     }
 
-    public function postsWithCount($count){
-        return $this->find()->with('category')->orderBy(['rand()' => SORT_DESC])->limit($count)->all();
+    public static function postsWithCount($count)
+    {
+        return self::find()->with('categories')->orderBy(['rand()' => SORT_DESC])->limit($count)->all();
     }
 
-    public function randomPosts(){
-        return $this->find()->with('category')->orderBy(['rand()' => SORT_DESC])->limit(4)->all();
+    public static function randomPosts()
+    {
+        return self::find()->with('categories')->orderBy(['rand()' => SORT_DESC])->limit(4)->all();
     }
 }

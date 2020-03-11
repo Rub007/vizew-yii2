@@ -28,13 +28,14 @@ use yii\widgets\LinkPager;
                             <div class="col-12 col-md-6">
                                 <!-- Post Thumbnail -->
                                     <a href="<?=Url::toRoute(['posts/view', 'id' => $post['id']])?>">
-                                        <img src="<?='http://yii-application-admin.loc/'.$post['src']?>" alt="">
+                                        <div>dsfffffffffffdsfsds</div>
+                                        <img src="/<?=$post['src']?>" alt="">
                                     </a>
                             </div>
                             <div class="col-12 col-md-6">
                                 <!-- Post Content -->
                                 <div class="post-content mt-0">
-                                    <?php foreach ($post['category'] as $category){ ?>
+                                    <?php foreach ($post['categories'] as $category){ ?>
                                         <a href="#" class="post-cata cata-sm cata-success" style="background-color: <?=$category['color']?>"><?=$category['name']?></a>
                                     <?php }?>
                                     <a href="<?=Url::toRoute(['posts/view', 'id' => $post['id']])?>" class="post-title mb-2"><?=$post['name']?></a>
