@@ -17,6 +17,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
+use zxbodya\yii2\galleryManager\GalleryManagerAction;
 
 /**
  * PostsController implements the CRUD actions for Post model.
@@ -82,7 +83,7 @@ class PostsController extends AdminController
     {
         $model = new Post();
         $model->scenario = Post::SCENARIO_CREATE;
-        //$categories = ArrayHelper::map(Category::find()->all(), 'id', 'name');
+//        $categories = ArrayHelper::map(Category::find()->all(), 'id', 'name');
         $categories = Category::find()->select(['name', 'id'])->indexBy('id')->column();
 
         if ($model->load(Yii::$app->request->post())) {
@@ -215,6 +216,13 @@ class PostsController extends AdminController
                 'useHash' => true,
                 'url' => '@web/contents/',
                 'path' => '@frontend/web/contents/',
+            ],
+            'galleryApi' => [
+                'class' => GalleryManagerAction::className(),
+                // mappings between type names and model classes (should be the same as in behaviour)
+                'types' => [
+                    'post' => Post::className()
+                ]
             ],
         ];
     }

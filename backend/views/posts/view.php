@@ -67,4 +67,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
+    <?php
+    foreach($model->getBehavior('galleryBehavior')->getImages() as $image) {
+        echo Html::img($image->getUrl('medium'));
+    }
+    ?>
 </div>

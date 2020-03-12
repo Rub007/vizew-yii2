@@ -8,6 +8,7 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 use yii\widgets\DetailView;
 use yii\widgets\ListView;
+use zxbodya\yii2\galleryManager\GalleryManager;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -100,6 +101,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+
     <a href="<?= Url::to('/posts') ?>">Reset</a>
 <!--    <img src="--><?//=Url::toRoute('/uploads/2020-03-11-10-03-54.png')?><!--" alt="">-->
     <img src="/uploads/2020-03-11-10-03-54.png" alt="">

@@ -85,6 +85,13 @@ use yii\widgets\ActiveForm;
                                     <a href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> 7</a>
                                 </div>
                             </div>
+                            <div class="row">
+                                <?php
+                                foreach($post->getBehavior('galleryBehavior')->getImages() as $image) {
+                                    echo Html::img($image->getUrl('medium'));
+                                }
+                                ?>
+                            </div>
                         </div>
                         <div><?= Html::decode($post['description']) ?></div>
                         <!-- Post Author -->
@@ -201,10 +208,7 @@ use yii\widgets\ActiveForm;
                         <a href="#" class="twitter"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</a>
                         <a href="#" class="google"><i class="fa fa-google" aria-hidden="true"></i> Google+</a>
                     </div>
-
                     <!-- ***** Single Widget ***** -->
-
-
                 </div>
             </div>
         </div>

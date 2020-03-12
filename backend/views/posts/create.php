@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use zxbodya\yii2\galleryManager\GalleryManager;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Post */

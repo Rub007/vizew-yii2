@@ -2,11 +2,12 @@
 
 namespace common\models;
 
-use http\Url;
+use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\UploadedFile;
+use zxbodya\yii2\galleryManager\GalleryBehavior;
 
 
 /**
@@ -54,8 +55,37 @@ class Post extends ActiveRecord
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
             ],
+            'galleryBehavior' => [
+                'class' => GalleryBehavior::className(),
+                'type' => 'post',
+                'extension' => 'jpg',
+                'directory' => Yii::getAlias('@frontend/web') . '/images/post',
+                'url' =>  Yii::$app->urlManagerFrontEnd->createUrl('/images/post'),
+//                'directory' => Yii::$app->urlManagerFrontEnd->createUrl('/images/post') ,
+//                'url' => Yii::$app->urlManagerFrontEnd->createUrl('/images/post'),
+                'versions' => [
+                    'small' => function ($img) {
+                        /** @var \Imagine\Image\ImageInterface $img */
+                        return $img
+                            ->copy()
+                            ->thumbnail(new \Imagine\Image\Box(200, 200));
+                    },
+                    'medium' => function ($img) {
+                        /** @var \Imagine\Image\ImageInterface $img */
+                        $dstSize = $img->getSize();
+                        $maxWidth = 800;
+                        if ($dstSize->getWidth() > $maxWidth) {
+                            $dstSize = $dstSize->widen($maxWidth);
+                        }
+                        return $img
+                            ->copy()
+                            ->resize($dstSize);
+                    },
+                ]
+            ],
         ];
     }
+
 
     /**
      * {@inheritdoc}
@@ -124,8 +154,8 @@ class Post extends ActiveRecord
     public function upload()
     {
         if ($this->validate()) {
-            $path = 'uploads/'.date("Y-m-d-h-m-s") . '.' . $this->imageFile->extension;
-            $fullPath = \yii\helpers\Url::to('@frontend/web/' ).$path;
+            $path = 'uploads/' . date("Y-m-d-h-m-s") . '.' . $this->imageFile->extension;
+            $fullPath = \yii\helpers\Url::to('@frontend/web/') . $path;
             $this->imageFile->saveAs($fullPath);
             $this->imageFile = null;
             return $path;
@@ -136,7 +166,7 @@ class Post extends ActiveRecord
 
     public function deleteImage($path)
     {
-        $fullPath = \yii\helpers\Url::to('@frontend/web/' ).$path;
+        $fullPath = \yii\helpers\Url::to('@frontend/web/') . $path;
         if (file_exists($fullPath)) {
             unlink($fullPath);
         }
@@ -155,7 +185,7 @@ class Post extends ActiveRecord
 
     public function getSameCategoryPosts($post)
     {
-        if (!$post['categories']){
+        if (!$post['categories']) {
             return [];
         }
         return $this->find()->where(['!=', 'id', $post['id']])->with(['categories' => function (ActiveQuery $query) use ($post) {

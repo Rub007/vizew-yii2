@@ -45,14 +45,7 @@ return [
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
             ],
         ],
-        'urlManagerFrontEnd' => [
-            'class' => 'yii\web\urlManager',
-            'baseUrl'=>'http://yii-application.loc',
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ]
+
     ],
     'params' => $params,
 ];

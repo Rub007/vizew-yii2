@@ -4,6 +4,7 @@ use bajadev\ckeditor\CKEditor;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use zxbodya\yii2\galleryManager\GalleryManager;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Post */
@@ -37,6 +38,21 @@ use yii\widgets\ActiveForm;
     ]);
     ?>
 
+
+
+    <?php
+    if ($model->isNewRecord) {
+        echo 'Can not upload images for new record';
+    } else {
+        echo GalleryManager::widget(
+            [
+                'model' => $model,
+                'behaviorName' => 'galleryBehavior',
+                'apiRoute' => 'posts/galleryApi'
+            ]
+        );
+    }
+    ?>
     <?=$form->field($model, 'imageFile')->fileInput()?>
 
     <div class="form-group">

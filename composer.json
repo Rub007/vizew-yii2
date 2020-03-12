@@ -22,7 +22,8 @@
         "kartik-v/yii2-widget-fileinput": "dev-master",
         "bajadev/yii2-ckeditor": "*",
         "kartik-v/yii2-widget-datepicker": "dev-master",
-        "kartik-v/yii2-field-range": "^1.3"
+        "kartik-v/yii2-field-range": "^1.3",
+        "zxbodya/yii2-gallery-manager": "*@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

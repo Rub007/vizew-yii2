@@ -3,16 +3,30 @@
 namespace frontend\controllers;
 
 use common\models\Category;
+use common\models\Post;
 use Yii;
+use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 
 class CategoriesController extends \yii\web\Controller
 {
     public function actionIndex($id)
     {
-        $categories = Category::find()->asArray()->all();
-        Yii::$app->params['categories'] = $categories;
-        $category = Category::find()->where(['id' => $id])->with('posts')->one();
-        return $this->render('index',['category' => $category]);
+        $category = Category::find()->where(['id' => $id])->with('posts')->asArray()->one();
+        $ids = ArrayHelper::getColumn($category['posts'], 'id');
+        $posts = $posts = Post::find()->where(['IN', 'id', $ids]);
+//        $posts = Post::findAll($ids);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $posts,
+            'pagination' => [
+                'pageSize' => 5,
+            ],
+        ]);
+//        return $this->render('index',['category' => $category,'dataProvider' => $dataProvider]);
+        return $this->render('index', [
+            'category' => $category,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
 }

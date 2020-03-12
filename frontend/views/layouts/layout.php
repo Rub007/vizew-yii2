@@ -6,6 +6,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
+use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
@@ -67,19 +68,19 @@ AppAsset::register($this);
                         <div class="classynav">
                             <ul>
                                 <li><a href="/">Home</a></li>
-                                <li><a href="<?= \yii\helpers\Url::to('posts') ?>">News</a></li>
+                                <li><a href="<?= \yii\helpers\Url::to('/posts') ?>">News</a></li>
                                 <li class="cn-dropdown-item has-down"><a href="#">Categories</a>
                                     <ul class="dropdown">
                                         <?php
                                             foreach ($categories as $category):
                                         ?>
-                                        <li><a href=""><?=$category['name']?></a></li>
+                                        <li><a href="<?=Url::toRoute(['/categories','id' => $category['id']]) ?>"><?=$category['name']?></a></li>
                                         <?php
                                             endforeach;
                                         ?>
                                     </ul>
                                     <span class="dd-trigger"></span></li>
-                                <li><a href="<?= \yii\helpers\Url::to('contact') ?>">Contact</a></li>
+                                <li><a href="<?= \yii\helpers\Url::to('/contact') ?>">Contact</a></li>
                             </ul>
                         </div>
                         <!-- Nav End -->
