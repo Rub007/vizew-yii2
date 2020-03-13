@@ -183,15 +183,16 @@ class Post extends ActiveRecord
 
     }
 
-    public function getSameCategoryPosts($post)
-    {
-        if (!$post['categories']) {
-            return [];
-        }
-        return $this->find()->where(['!=', 'id', $post['id']])->with(['categories' => function (ActiveQuery $query) use ($post) {
-            $query->where(['id' => $post['categories'][0]['id']]);
-        }])->limit(2)->all();
-    }
+//    public function getSameCategoryPosts($model,$count,$visitedIds,$title = 'Relateds')
+//    {
+//        if (!$model['categories']) {
+//            return [];
+//        }
+//        $posts =  $this->find()->where(['not in', 'id', $visitedIds])->with(['categories' => function (ActiveQuery $query) use ($model) {
+//            $query->where(['id' => $model['categories'][0]['id']]);
+//        }])->limit($count)->all();
+//        return $this->render('relateds',['relateds' => $posts, 'title' => $title]);
+//    }
 
     public static function firstPost()
     {
