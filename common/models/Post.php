@@ -6,6 +6,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\helpers\Url;
 use yii\web\UploadedFile;
 use zxbodya\yii2\galleryManager\GalleryBehavior;
 
@@ -60,7 +61,7 @@ class Post extends ActiveRecord
                 'type' => 'post',
                 'extension' => 'jpg',
                 'directory' => Yii::getAlias('@frontend/web') . '/images/post',
-                'url' =>  Yii::$app->urlManagerFrontEnd->createUrl('/images/post'),
+                'url' => Yii::$app->urlManagerFrontEnd->createUrl('/images/post'),
 //                'directory' => Yii::$app->urlManagerFrontEnd->createUrl('/images/post') ,
 //                'url' => Yii::$app->urlManagerFrontEnd->createUrl('/images/post'),
                 'versions' => [
@@ -174,12 +175,12 @@ class Post extends ActiveRecord
 
     public function nextPost($id)
     {
-        return $this->find()->where(['>', 'id', $id])->with('categories')->asArray()->one();
+        return $this->find()->where(['>', 'id', $id])->with('categories')->one();
     }
 
     public function previousPost($id)
     {
-        return $this->find()->where(['<', 'id', $id])->with('categories')->orderBy(['id' => SORT_DESC])->asArray()->one();
+        return $this->find()->where(['<', 'id', $id])->with('categories')->orderBy(['id' => SORT_DESC])->one();
 
     }
 
@@ -207,5 +208,10 @@ class Post extends ActiveRecord
     public static function randomPosts()
     {
         return self::find()->with('categories')->orderBy(['rand()' => SORT_DESC])->limit(4)->all();
+    }
+
+    public function getViewUrl()
+    {
+        return Url::toRoute(['posts/view', 'id' => $this->id]);
     }
 }

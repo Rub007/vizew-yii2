@@ -1,50 +1,18 @@
 <!-- ##### Pager Area Start ##### -->
 <?php
 
-use frontend\components\RelatedsWidget;
+use common\models\Comment;use frontend\components\RelatedsWidget;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
-
 ?>
+<!--<h1>--><?php //$ ?><!--</h1>-->
 <div class="vizew-pager-area">
     <?php if ($previous) : ?>
-        <div class="vizew-pager-prev">
-            <p>PREVIOUS ARTICLE</p>
-            <!-- Single Feature Post -->
-            <div class="single-feature-post video-post bg-img pager-article"
-                 style="background-image: url(<?='/'.$previous['src'] ?>);">
-                <!-- Post Content -->
-                <div class="post-content">
-                    <?php foreach ($previous['categories'] as $category): ?>
-                        <a href="" class="post-cata cata-sm cata-success"
-                           style="background-color:<?= $category['color'] ?>"><?= $category['name'] ?></a>
-                    <?php endforeach; ?>
-                    <a href="<?= Url::toRoute(['posts/view', 'id' => $previous['id']]) ?>"
-                       class="post-title"><?= $previous['name'] ?></a>
-                </div>
-            </div>
-        </div>
-
+        <?=$this->render('_previousPost',['previous' => $previous])?>
     <?php endif; ?>
     <?php if ($next): ?>
-        <div class="vizew-pager-next">
-            <p>NEXT ARTICLE</p>
-            <!-- Single Feature Post -->
-            <div class="single-feature-post video-post bg-img pager-article"
-                 style="background-image: url(<?='/'.$next['src'] ?>);   ">
-                <!-- Post Content -->
-                <div class="post-content">
-                    <?php foreach ($next['categories'] as $category): ?>
-                        <a href="" class="post-cata cata-sm cata-success"
-                           style="background-color:<?= $category['color'] ?>"><?= $category['name'] ?></a>
-                    <?php endforeach; ?>
-                    <a href="<?= Url::toRoute(['posts/view', 'id' => $next['id']]) ?>"
-                       class="post-title"><?= $next['name'] ?></a>
-                </div>
-                <!-- Video Duration -->
-            </div>
-        </div>
+        <?=$this->render('_nextPost',['next' => $next])?>
     <?php endif; ?>
 </div>
 <!-- ##### Pager Area End ##### -->
@@ -67,18 +35,18 @@ use yii\widgets\ActiveForm;
 
                         <!-- Post Content -->
                         <div class="post-content mt-0">
-                            <?php foreach ($post['categories'] as $category):?>
-                                <a href="#" style="background-color: <?= $category['color'] ?>"
-                                   class="post-cata cata-sm cata-danger"><?= $category['name']?></a>
+                            <?php foreach ($post->categories as $category):?>
+                                <a href="#" style="background-color: <?= $category->color ?>"
+                                   class="post-cata cata-sm cata-danger"><?= $category->name;?></a>
                             <?php endforeach;?>
-                            <a href="<?= Url::toRoute(['posts/view', 'id' => $post['id']]) ?>"
-                               class="post-title mb-2"><?= $post['name'] ?></a>
+                            <a href="<?=$post->getViewUrl()?>"
+                               class="post-title mb-2"><?= $post->name ?></a>
                             <div class="post-details-thumb mb-50">
-                                <img src="/<?=$post['src']?>" alt="">
+                                <img src="/<?=$post->src?>" alt="">
                             </div>
                             <div class="d-flex justify-content-between mb-30">
                                 <div class="post-meta d-flex align-items-center">
-                                    <a href="#" class="post-date"><?= $post['created_at'] ?></a>
+                                    <a href="#" class="post-date"><?= $post->created_at?></a>
                                 </div>
                                 <div class="post-meta d-flex">
                                     <a href="#"><i class="fa fa-comments-o" aria-hidden="true"></i> 32</a>
@@ -94,7 +62,7 @@ use yii\widgets\ActiveForm;
                                 ?>
                             </div>
                         </div>
-                        <div><?= Html::decode($post['description']) ?></div>
+                        <div><?= Html::decode($post->description) ?></div>
                         <!-- Post Author -->
                         <div class="related-post-area mt-5">
                             <!-- Section Title -->
@@ -126,10 +94,10 @@ use yii\widgets\ActiveForm;
                                     <div class="comment-content d-flex">
                                         <!-- Comment Meta -->
                                         <div class="comment-meta">
-                                            <a href="#" class="comment-date"><?=$oneComment['created_at']?></a>
-                                            <h6><?=$oneComment['name']?></h6>
-                                            <h6><?=$oneComment['email']?></h6>
-                                            <p><?=$oneComment['message']?></p>
+                                            <a href="#" class="comment-date"><?=$oneComment->created_at?></a>
+                                            <h6><?=$oneComment->name?></h6>
+                                            <h6><?=$oneComment->email?></h6>
+                                            <p><?=$oneComment->message?></p>
                                         </div>
                                     </div>
                                 </li>
@@ -152,7 +120,7 @@ use yii\widgets\ActiveForm;
                                 <?php
                                 $form = ActiveForm::begin([
                                     'method' => 'post',
-                                    'action' => ['comments/add?id='.$post['id']],
+                                    'action' => ['comments/add?id='.$post->id],
                                 ]); ?>
                                 <div class="form-group">
                                     <?= $form->field($comment, 'name')->textInput()->label('Name') ?>

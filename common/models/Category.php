@@ -82,7 +82,6 @@ class Category extends \yii\db\ActiveRecord
             ->with('posts')
             ->orderBy(['rand()' => SORT_DESC])
             ->limit(2)
-            ->asArray()
             ->all();
     }
 }

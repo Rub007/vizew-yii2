@@ -4,7 +4,6 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
-
 ?>
 <div class="container">
         <div class="row">
@@ -27,20 +26,20 @@ use yii\widgets\LinkPager;
                         <div class="row align-items-center">
                             <div class="col-12 col-md-6">
                                 <!-- Post Thumbnail -->
-                                    <a href="<?=Url::toRoute(['posts/view', 'id' => $post['id']])?>">
+                                    <a href="<?=$post->getViewUrl()?>">
                                         <div>dsfffffffffffdsfsds</div>
-                                        <img src="/<?=$post['src']?>" alt="">
+                                        <img src="/<?=$post->src?>" alt="">
                                     </a>
                             </div>
                             <div class="col-12 col-md-6">
                                 <!-- Post Content -->
                                 <div class="post-content mt-0">
-                                    <?php foreach ($post['categories'] as $category){ ?>
-                                        <a href="#" class="post-cata cata-sm cata-success" style="background-color: <?=$category['color']?>"><?=$category['name']?></a>
+                                    <?php foreach ($post->categories as $category){ ?>
+                                        <a href="#" class="post-cata cata-sm cata-success" style="background-color: <?=$category->color?>"><?=$category->name?></a>
                                     <?php }?>
-                                    <a href="<?=Url::toRoute(['posts/view', 'id' => $post['id']])?>" class="post-title mb-2"><?=$post['name']?></a>
+                                    <a href="<?=Url::toRoute(['posts/view', 'id' => $post->id])?>" class="post-title mb-2"><?=$post->name?></a>
                                     <div class="post-meta d-flex align-items-center mb-2">
-                                        <a href="#" class="post-date"><?= $post['created_at'] ?></a>
+                                        <a href="#" class="post-date"><?= $post->created_at?></a>
                                     </div>
                                     <div class="mb-2"></div>
                                 </div>

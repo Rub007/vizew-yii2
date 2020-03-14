@@ -21,7 +21,7 @@ use yii\widgets\ListView;
                     <div class="col-12 col-md-6">
                         <!-- Post Content -->
                         <div class="post-content mt-0">
-                            <a href="<?= Url::toRoute(['posts/view', 'id' => $model['id']])?>" class="post-title mb-2"><?= $model['name'] ?></a>
+                            <a href="<?= $model->getViewUrl()?>" class="post-title mb-2"><?= $model->name?></a>
                         </div>
                     </div>
                 </div>

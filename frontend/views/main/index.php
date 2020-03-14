@@ -11,15 +11,15 @@ use yii\helpers\Url; ?>
                     <div class="tab-pane show active" id="post-1" role="tabpanel" aria-labelledby="post-1-tab">
                         <!-- Single Feature Post -->
                         <div class="single-feature-post video-post bg-img"
-                             style="background-image:url(<?= '/' . $firstPost['src'] ?>)">
+                             style="background-image:url(<?= '/' . $firstPost->src?>)">
                             <!-- Post Content -->
                             <div class="post-content">
-                                <?php foreach($firstPost['categories'] as $category):?>
-                                <a style="background-color:<?= $category['color'] ?>" class="post-cata"
-                                   href="#"><?= $category['name'] ?></a>
+                                <?php foreach($firstPost->categories as $category):?>
+                                <a style="background-color:<?= $category->color?>" class="post-cata"
+                                   href="#"><?= $category->name?></a>
                                 <?php endforeach; ?>
-                                <a href="<?= Url::toRoute(['posts/view', 'id' => $firstPost['id']])?>"
-                                   class="post-title"><?= $firstPost['name'] ?></a>
+                                <a href="<?=$firstPost->getViewUrl()?>"
+                                   class="post-title"><?= $firstPost->name?></a>
                             </div>
                         </div>
                     </div>
@@ -49,16 +49,16 @@ use yii\helpers\Url; ?>
                 <div class="single-post-area mb-80">
                     <!-- Post Thumbnail -->
                     <div class="post-thumbnail">
-                        <img src="<?='/' . $trendingPost['src']?>" alt="">
+                        <img src="<?='/' . $trendingPost->src?>" alt="">
                     </div>
                     <!-- Post Content -->
                     <div class="post-content">
-                        <?php foreach($trendingPost['categories'] as $category): ?>
-                        <a href="#" style="background-color: <?= $category['color'] ?>"
-                           class="post-cata cata-sm cata-success"><?= $category['name']?></a>
+                        <?php foreach($trendingPost->categories as $category): ?>
+                        <a href="#" style="background-color: <?= $category->color?>"
+                           class="post-cata cata-sm cata-success"><?= $category->name?></a>
                         <?php endforeach; ?>
-                        <a href="<?=Url::toRoute(['posts/view', 'id' => $trendingPost['id']])?>"
-                           class="post-title"><?= $trendingPost['name'] ?></a>
+                        <a href="<?=$trendingPost->getViewUrl()?>"
+                           class="post-title"><?= $trendingPost->name?></a>
                     </div>
                 </div>
             </div>
@@ -85,15 +85,15 @@ use yii\helpers\Url; ?>
                         <!-- Single Feature Post -->
                         <?php foreach($featuredPosts as $featuredPost ): ?>
                         <div class="single-feature-post video-post bg-img"
-                             style="background-image: url('<?='/' . $featuredPost['src']?>')">
+                             style="background-image: url('<?='/' . $featuredPost->src?>')">
                             <!-- Post Content -->
                             <div class="post-content">
-                                <?php foreach($featuredPost['categories'] as $category): ?>
+                                <?php foreach($featuredPost->categories as $category): ?>
                                 <a href="#" class="post-cata my-category"
-                                   style="background-color:<?= $category['color'] ?>"><?= $category['name'] ?></a>
+                                   style="background-color:<?= $category->color ?>"><?= $category->name?></a>
                                 <?php endforeach; ?>
-                                <a href="<?=Url::toRoute(['posts/view', 'id' => $featuredPost['id']])?>"
-                                   class="post-title"><?= $featuredPost['name'] ?></a>
+                                <a href="<?=$featuredPost->getViewUrl()?>"
+                                   class="post-title"><?= $featuredPost->name?></a>
                             </div>
                         </div>
                         <?php endforeach; ?>
@@ -104,25 +104,25 @@ use yii\helpers\Url; ?>
                     <div class="col-12 col-lg-6">
                         <!-- Section Heading -->
                         <div class="section-heading style-2">
-                            <h4><?= $category['name'] ?></h4>
+                            <h4><?= $category->name?></h4>
                             <div class="line"></div>
                         </div>
 
                         <!-- Business Video Slides -->
                         <div class="business-video-slides owl-carousel mb-50">
-                            <?php foreach($category['posts'] as $post): ?>
+                            <?php foreach($category->posts as $post): ?>
                             <!-- Single Blog Post -->
                             <div class="single-post-area my-area single-feature-post video-post"
-                                 style="background-image: url('<?='/' . $post['src']?>'); background-repeat: no-repeat">
-                                <a href="{{route('single.post',$topic)}}" class="btn play-btn"><i
+                                 style="background-image: url('<?='/' . $post->src?>'); background-repeat: no-repeat">
+                                <a href="<?=$post->getViewUrl()?>" class="btn play-btn"><i
                                             class="fa fa-play" aria-hidden="true"></i></a>
 
                                 <!-- Post Content -->
                                 <div class="post-content">
-                                    <a href="#" style="background-color:<?= $category['color'] ?>"
-                                       class="post-cata cata-sm cata-primary"><?= $category['name'] ?></a>
-                                    <a href="<?=Url::toRoute(['posts/view', 'id' => $post['id']])?>"
-                                       class="post-title my-title"><?= $post['name'] ?></a>
+                                    <a href="#" style="background-color:<?= $category->color?>"
+                                       class="post-cata cata-sm cata-primary"><?= $category->name?></a>
+                                    <a href="<?=$post->getViewUrl()?>"
+                                       class="post-title my-title"><?= $post->name?></a>
                                 </div>
                             </div>
                             <?php endforeach; ?>
@@ -142,18 +142,18 @@ use yii\helpers\Url; ?>
                         <div class="col-12 col-lg-6">
                             <!-- Post Thumbnail -->
                             <div class="post-thumbnail">
-                                <img src="<?='/' . $randomPost['src']?>">
+                                <img src="<?='/' . $randomPost->src?>">
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <!-- Post Content -->
                             <div class="post-content mt-0">
-                                <?php foreach($randomPost['categories'] as $category) : ?>
+                                <?php foreach($randomPost->categories as $category) : ?>
                                 <a href="#" class="post-cata cata-sm cata-success"
-                                   style="background-color:<?= $category['color'] ?>"><?= $category['name'] ?></a>
+                                   style="background-color:<?=$category->color?>"><?= $category->name ?></a>
                                 <?php endforeach; ?>
-                                <a href="<?=Url::toRoute(['posts/view', 'id' => $randomPost['id']])?>"
-                                   class="post-title mb-2"><?= $randomPost['name'] ?></a>
+                                <a href="<?=$randomPost->getViewUrl()?>"
+                                   class="post-title mb-2"><?= $randomPost->name ?></a>
                                 <div class="post-meta d-flex align-items-center mb-2">
                                 </div>
                             </div>
@@ -186,18 +186,18 @@ use yii\helpers\Url; ?>
                         <div class="single-post-area mb-30">
                             <!-- Post Thumbnail -->
                             <div class="post-thumbnail">
-                                <img src="<?='/' . $firstPost['src']?>" alt="">
+                                <img src="<?='/' . $firstPost->src?>" alt="">
                             </div>
 
                             <!-- Post Content -->
                             <div class="post-content">
-                                <?php foreach($firstPost['categories'] as $category): ?>
+                                <?php foreach($firstPost->categories as $category): ?>
 
                                 <a href="#" class="post-cata cata-sm cata-success"
-                                   style=" background-color: <?= $category['color'] ?>"><?= $category['name'] ?></a>
+                                   style=" background-color: <?= $category->color?>"><?= $category->name?></a>
                                 <?php endforeach; ?>
-                                <a href="<?=Url::toRoute(['posts/view', 'id' => $firstPost['id']])?>"
-                                   class="post-title"><?= $firstPost['name'] ?></a>
+                                <a href="<?=$firstPost->getViewUrl()?>"
+                                   class="post-title"><?= $firstPost->name?></a>
                             </div>
                         </div>
                     </div>
