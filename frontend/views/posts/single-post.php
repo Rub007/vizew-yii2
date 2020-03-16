@@ -73,7 +73,7 @@ use yii\widgets\ActiveForm;
 
                             <div class="row">
                                 <!-- Single Blog Post -->
-                                <?= RelatedsWidget::getRelateds($post,1,$visitedIds,'TITLE')?>
+                                <?= RelatedsWidget::widget(['model' =>$post,'count' => 1,'visitedIds' => $visitedIds,'title' => 'TITLE'])?>
                             </div>
                         </div>
 

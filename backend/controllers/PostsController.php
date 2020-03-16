@@ -172,7 +172,7 @@ class PostsController extends AdminController
     {
         $model = $this->findModel($id);
 
-        $uploadFile = new UploadForm();
+//        $uploadFile = new UploadForm();
 
         $model->deleteImage($model->src);
 

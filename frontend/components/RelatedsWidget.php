@@ -8,22 +8,30 @@ use Yii;
 
 use yii\base\Widget;
 use yii\db\ActiveQuery;
+use yii\db\Query;
 
 class RelatedsWidget extends Widget
 {
-
-    public static function getRelateds($model,$count,$visitedIds,$title = 'Relateds')
+    public $model;
+    public $count;
+    public $visitedIds;
+    public $title = 'Relateds';
+    public function run()
     {
+        $model = $this->model;
         if (!$model['categories']) {
             return 'Sorry, there are no posts for you';
         }
-        $posts =  Post::find()->where(['not in', 'id', $visitedIds])->with(['categories' => function (ActiveQuery $query) use ($model) {
-            $query->where(['id' => $model['categories'][0]['id']]);
-        }])->limit($count)->all();
-        return Yii::$app->getView()->render('@frontend/components/views/relateds',
+        $posts = Post::find()
+            ->where(['NOT IN', 'posts.id', $this->visitedIds])
+            ->innerJoinWith(['categoryPosts' => function (ActiveQuery $query) use ($model){
+                $query->where(['category_id' => $model['categories'][0]['id']]);
+            }])
+            ->all();
+        return $this->render('relateds',
             [
                 'relateds' => $posts,
-                'title' => $title,
+                'title' => $this->title,
             ]);
     }
 }
